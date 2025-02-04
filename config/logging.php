@@ -127,6 +127,17 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'apptica_top_positions' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/apptica_top_positions.log'),
+            'level' => 'info',
+        ],
+
+        'top_category' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/top_positions.log'),
+            'level' => 'info',
+        ],
     ],
 
 ];

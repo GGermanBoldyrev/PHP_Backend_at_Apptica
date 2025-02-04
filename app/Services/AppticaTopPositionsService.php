@@ -38,7 +38,7 @@ class AppticaTopPositionsService implements TopPositionsInterface
             $statusCode = $response->getStatusCode();
 
             if ($statusCode !== 200) {
-                $this->logger->error('Apptica API request failed', [
+                $this->logger->channel('apptica_top_positions')->error('Apptica API request failed', [
                     'status_code' => $statusCode,
                     'response_body' => $response->getBody()->getContents(),
                     'api_url' => $apiURL,
@@ -49,7 +49,7 @@ class AppticaTopPositionsService implements TopPositionsInterface
             $data = json_decode($response->getBody()->getContents(), true);
 
             if ($data === null) {
-                $this->logger->error('Failed to decode API response', [
+                $this->logger->channel('apptica_top_positions')->error('Failed to decode API response', [
                     'status_code' => $statusCode,
                     'api_url' => $apiURL,
                 ]);
@@ -58,7 +58,7 @@ class AppticaTopPositionsService implements TopPositionsInterface
 
             return $data;
         } catch (GuzzleException $e) {
-            $this->logger->error('API request failed', [
+            $this->logger->channel('apptica_top_positions')->error('API request failed', [
                 'exception_message' => $e->getMessage(),
                 'api_url' => $apiURL,
             ]);
@@ -129,14 +129,15 @@ class AppticaTopPositionsService implements TopPositionsInterface
     public function populateDatabase(?array $rawData): void
     {
         if (empty($rawData) || !isset($rawData['data']) || !is_array($rawData['data'])) {
-            $this->logger->warning('Invalid or empty raw data received for database population.');
+            $this->logger->channel('apptica_top_positions')
+                ->warning('Invalid or empty raw data received for database population.');
             return;
         }
 
         $dataToSave = $this->processRawApiResponse($rawData['data']);
 
         if (empty($dataToSave)) {
-            $this->logger->info('No data to save to database after processing.');
+            $this->logger->channel('apptica_top_positions')->info('No data to save to database after processing.');
             return;
         }
 
@@ -152,6 +153,7 @@ class AppticaTopPositionsService implements TopPositionsInterface
             );
         }
 
-        $this->logger->info('Successfully populated database with top positions data.', ['record_count' => count($dataToSave)]);
+        $this->logger->channel('apptica_top_positions')
+            ->info('Successfully populated database with top positions data.', ['record_count' => count($dataToSave)]);
     }
 }

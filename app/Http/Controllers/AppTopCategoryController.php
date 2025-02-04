@@ -6,7 +6,6 @@ use App\DTO\GetTopCategoryPositionsDTO;
 use App\Http\Requests\GetTopCategoryPositionsRequest;
 use App\Services\TopCategoryService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class AppTopCategoryController extends Controller
 {
