@@ -35,4 +35,7 @@ return [
         ],
     ],
 
+    'apptica' => [
+        'apptica_api_key' => env('APPTICA_API_KEY'),
+    ],
 ];
