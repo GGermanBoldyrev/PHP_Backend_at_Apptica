@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('app_top_category_positions', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->integer('category_id')->index();
-            $table->integer('position')->index();
+            $table->date('date')->index();
+            $table->integer('category_id');
+            $table->integer('position');
             $table->timestamps();
 
             $table->unique(['date', 'category_id'], 'date_category_unique');
